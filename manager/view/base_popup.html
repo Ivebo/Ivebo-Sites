@@ -1,0 +1,30 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head><meta http-equiv="X-UA-Compatible" content="chrome=1"> 
+<title>Sites</title>
+<link rel="stylesheet" href="/admin/static/css/reset.css" type="text/css" /> 
+<link rel="stylesheet" href="/admin/static/css/popup.css" type="text/css" /> 
+<script type="text/javascript" src="/admin/static/scripts/ajax/libs/jquery/1.7.2/jquery.min.js"></script> 
+{% block head_extras %}
+{% endblock %}
+</head>
+
+<body>
+    {% block header %}
+    <div id="header">
+        <div class="relative">
+        <h1>{{titlepopup}}</h1>
+        </div>
+    </div>
+    {% endblock %}
+    <div id="content" class="relative">
+    {% block content %}
+    {% endblock %}
+    </div>
+    {% block buttons %}
+    <div id="buttons"><a href="#" class="btnblue" id="agree">Agregar</a><a href="#" class="btnblue" id="close">Cerrar</a></div>
+    {% endblock %}
+</body>
+</html>

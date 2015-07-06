@@ -1,0 +1,72 @@
+﻿{% extends "manager/view/base_popup.html" %}
+{% block head_extras %}
+<script type="text/javascript" src="/admin/static/scripts/jquery.sort.js"></script>
+<script type="text/javascript">
+var open = 1;
+var opens = new Array();
+var categories = new Array();
+Array.prototype.exists = function(o) {
+for(var i = 0; i < this.length; i++)
+   if(this[i] === o)
+     return true;
+return false;
+}
+Array.prototype.delete1 = function(o) {
+for(var i = 0; i < this.length; i++)
+	if(this[i] == o)
+		this.splice(i,1);
+}
+$(document).ready(function(){	
+	//Close popup
+    $("#close").click(function(){
+				parent.$.fancybox.close();
+                return false;
+			});  
+    //End
+	
+	//Agree popup
+    $("#agree").click(function(){
+				window.parent.insertcategory(categories,categories);
+                parent.$.fancybox.close();
+                return false;
+			});  
+    //End
+    
+      
+
+    //Add submenus
+    $('#categorylist #main a.linksub').live('click',function(){
+		var li = $(this).parent();
+		if(!opens.exists($(this).attr('href').split('#')[1])){
+			$.get('/admin/category/subcategories?view=edit', { id: $(this).attr('href').split('#')[1]} , function(data) {
+				if(data == 'error'){
+                alert('Error leyendo las subcategorias');
+				}
+				else{
+					$(li).append(data);
+				}
+			});
+			opens.push($(this).attr('href').split('#')[1])
+		}
+		else{
+			$(li).children().last().hide();
+			opens.delete1($(this).attr('href').split('#')[1]);
+		}
+			 
+        return false;
+    });    
+
+});
+</script>
+{% endblock %}
+{% block title %} {{titlepopup}} {% endblock %}
+{% block content %}
+<div class="leftcol" id="categorylist">
+<ul id="main">
+{% for c in categories %}
+<li id="{{ c.key.id() }}">{% if c.category_parent_set.count %}<a href="#{{ c.key.id }}" class="linksub">{% endif %}{{ c.name }} {% if c.category_parent_set.count %}<span class="arrow">▼</span>{% endif %}{% if c.category_parent_set.count %}</a>{% endif %} <a href="/admin/category/edit?key={{c.key}}" class="editcat">Editar</a></li>
+{% endfor %}
+</ul>
+</div>
+{% endblock %}
+

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1"> 
+        <title>Sites</title>
+        <link rel="stylesheet" href="/admin/static/css/html5reset.css" type="text/css" />
+        <link href="/admin/static/css/base_admin.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="/admin/static/scripts/ajax/libs/jquery/1.7.2/jquery.min.js"></script> 
+        <link rel="stylesheet" type="text/css" href="/admin/static/scripts/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+        <script type="text/javascript" src="/admin/static/scripts/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+        <script type="text/javascript" src="/admin/static/scripts/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+         <link href="/admin/static/css/icons.css" rel="stylesheet">
+        {% block head_extras %}
+        {% endblock %}
+    </head>
+    <body>
+        <div id="page">
+            <div id="header">
+            <div class="center">
+                <h1>Sites</h1>
+                <div id="exit">{{ exit }}</div>
+            </div>
+	       </div>
+            <div id="main">
+                <div id="sidebar">
+                    {% include "/manager/view/nav.html" %}
+                </div>
+                <div id="content">
+                    <div id="title"><span>{% block title_page %}{{ title_aplication }}{% endblock %}</span></div>
+                    <div id="tabs">
+                        {% block tabs %}
+                        {% endblock %}
+                        <div class="clear"></div>
+                    </div>
+                    <div id="appContent">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div id="footer"> 
+                <p>Con tecnología de <a href="http://www.ivebo.com">ivebo</a></p>
+            </div>
+        </div>
+    </body>
+</html>

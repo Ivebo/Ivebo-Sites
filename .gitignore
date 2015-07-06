@@ -55,3 +55,9 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Mac crap
+.DS_Store
+
+# Index App Engine
+index.yaml

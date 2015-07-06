@@ -1,0 +1,126 @@
+﻿{% extends "manager/view/base.html" %}
+{% block head_extras %}
+<script type="text/javascript" src="/tinymce/tiny_mce.js"></script>
+<script type="text/javascript" src="/admin/static/scripts/editor.js"></script>
+<script type="text/javascript" src="/admin/static/scripts/jquery.validate.js"></script>
+<script src="/admin/static/scripts/additional-methods.js"></script>
+<script type="text/javascript">
+Array.prototype.delete1 = function(o) {
+	for(var i = 0; i < this.length; i++)
+    	if(this[i] == o)
+       		this.splice(i,1);
+}
+var valids = new Array();
+function insertcategory(array){
+    $('#listcategories #cat').html('');
+    for(i=valids.length,j=0;j<array.length;i++){  
+    if(jQuery.inArray(array[j],valids) < 0){ 
+        valids[i]=array[j];
+        }
+    j++;
+    }
+    $('#categories').val(valids);
+    for(var i = 0; i < valids.length; i++){
+        $('#listcategories #cat').append('<a href="#'+valids[i].split('/')[0]+'" class="categorybtn">'+valids[i].split('/')[1]+'</a>');
+    }
+}
+	function insertimage(imagen){
+    	tinyMCE.activeEditor.execCommand('mceInsertContent', false, '<img src="'+imagen+'" border="0" />');
+	}
+	$(document).ready(function(){	
+		 $("#insertimage").fancybox({
+				'width'				: 300,
+				'height'			: 120,
+				'autoScale'			: false,
+				'transitionIn'		: 'none',
+				'transitionOut'		: 'none',
+				'type'				: 'iframe',
+                'overlayColor'		: '#333',
+				'overlayOpacity'	: 0.8,
+                'titleShow'         : true
+			});
+         $("#addgallery").fancybox({
+                'width'             : 800,
+                'height'            : 600,
+                'autoScale'         : false,
+                'transitionIn'      : 'none',
+                'transitionOut'     : 'none',
+                'type'              : 'iframe',
+                'overlayColor'      : '#333',
+                'overlayOpacity'    : 0.8,
+                'titleShow'         : true
+            });
+		$('#pageform').validate({
+			rules:{
+				titlepage:'required',
+				summarypage:'required',
+                imgpage:{
+                    accept: "image/*",
+                    extension: "jpg|jpge|png|gif"
+                }
+			},
+			messages:{
+				titlepage:'Título requerido',
+				summarypage:'Resumen requerido',
+                imgpage:{
+                    accept: "Escoge una imagen",
+                    extension: "Solo es permitido archivos jpg,png,gif"
+                }
+			}
+		});	
+		//Add category
+        $("#add_category").fancybox({
+                'width'             : 600,
+                'height'            : 450,
+                'autoScale'         : false,
+                'transitionIn'      : 'none',
+                'transitionOut'     : 'none',
+                'type'              : 'iframe',
+                'overlayColor'      : '#333',
+                'overlayOpacity'    : 0.3,
+                'scrolling'     : 'yes',
+                'padding': 1,
+                'showCloseButton': false
+
+        });  
+        //End
+        //Delete category
+        $('.categorybtn').live('click',function(){
+            valids.delete1($(this).attr('href').split('#')[1]+'/'+$(this).text());
+            $('#categories').val(valids);
+            $(this).remove();
+            return false;
+        });
+        //End
+	});
+</script>
+{% endblock %}
+{% block tabs %}
+<ul>
+    <li><a href="/admin/page/new" class="active icon-page-add margin-icon">Nueva Página</a></li>
+    <li><a href="/admin/page/view" class="icon-page-view margin-icon">Ver Páginas</a></li>  
+</ul>    
+{% endblock %}
+{% block content %}
+<form id="pageform" name="page" method="post" action="/admin/page/save" enctype="multipart/form-data">
+	<div class="span1">
+		<p>Titulo Página:</p>
+		<p><input type="text" name="titlepage" id="titlepage" value="" class="titletext" /></p>
+		<p>Resumen Página:</p>
+		<p><textarea name="summarypage" id="summarypage" value="" style="width: 500px;height:50px;" ></textarea></p>
+        <p>Destacado:</p>
+        <p><input type="radio" name="featured" value="yes"> Si <input type="radio" name="featured" value="no" checked> No</p>
+		<p>Categoría:</p>
+		<p><div class="row" id="listcategories"><a href="/admin/category/view" class="btnblue" id="add_category"><i class="fa fa-folder"></i> Agregar Categoría</a><span id="cat"></span></div><input type="hidden" name="categories" value="" id="categories" /></p><br>
+		<p>Imagen para cabecera de la página:</p>
+		<p> <input type="file" name="imgpage" /></p>
+        <div class="barinsert">
+		<a href="/admin/files/image" title="Insertar Imagen" id="insertimage" ><i class="fa fa-picture-o"></i> Insertar Imagen</a>
+            </div>
+        <!--<a href="/admin/gallery/admin?page=key" id="addgallery" class="btneditor" >Agregar Galería</a>-->
+		<textarea name="contentpage" style="width: 97%; height:450px;" id="contentpage"></textarea>
+		<br/> 
+		<input type="submit" name="guardar_articulo" id="guardar_articulo" value="Guardar Página" class="btngreenlarge" />
+	</div>
+</form>
+{% endblock %}

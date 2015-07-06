@@ -1,0 +1,122 @@
+﻿{% extends "manager/view/base.html" %}
+{% block head_extras %}
+<script type="text/javascript" src="/tinymce/tiny_mce.js"></script>
+<script type="text/javascript" src="/admin/static/scripts/editor.js"></script>
+<script type="text/javascript" src="/admin/static/scripts/jquery.validate.js"></script>
+<script src="/admin/static/scripts/additional-methods.js"></script>
+<script type="text/javascript">
+Array.prototype.delete1 = function(o) {
+	for(var i = 0; i < this.length; i++)
+    	if(this[i] == o)
+       		this.splice(i,1);
+}
+var cat = eval({{categoriesnames}});
+var categories = []
+for (i=0; i < cat.groups.length; i++)  
+    {  
+      categories.push(cat.groups[i].catid+"/"+cat.groups[i].catname);  
+    }  
+valids = categories
+function insertcategory(array){
+   for(i=valids.length,j=0;j<array.length;i++){  
+    if(jQuery.inArray(array[j],valids) < 0){ 
+        valids[i]=array[j];
+        $('#listcategories #cat').append('<a href="#'+valids[i].split('/')[0]+'" class="categorybtn">'+valids[i].split('/')[1]+'</a>');
+        }
+    j++;
+    }
+    $('#categories').val(valids);
+}
+	function insertimage(imagen){
+    	tinyMCE.activeEditor.execCommand('mceInsertContent', false, '<img src="'+imagen+'" border="0" />');
+	}
+	$(document).ready(function(){	
+		 $('#categories').val(categories);
+		 $("#insertimage").fancybox({
+				'width'				: 300,
+				'height'			: 120,
+				'autoScale'			: false,
+				'transitionIn'		: 'none',
+				'transitionOut'		: 'none',
+				'type'				: 'iframe',
+                'overlayColor'		: '#333',
+				'overlayOpacity'	: 0.8,
+                'titleShow'         : true
+			});
+		$('#pageform').validate({
+			rules:{
+				titlepage:'required',
+				summarypage:'required'
+			},
+			messages:{
+				titlepage:'Título requerido',
+				summarypage:'Resumen requerido'
+			}
+		});	
+		//Add category
+        $("#add_category").fancybox({
+                'width'             : 600,
+                'height'            : 450,
+                'autoScale'         : false,
+                'transitionIn'      : 'none',
+                'transitionOut'     : 'none',
+                'type'              : 'iframe',
+                'overlayColor'      : '#333',
+                'overlayOpacity'    : 0.3,
+                'scrolling'     : 'yes',
+                'padding': 1,
+                'showCloseButton': false
+
+        });  
+        //End
+        //Delete category
+        $('.categorybtn').live('click',function(){
+            valids.delete1($(this).attr('href').split('#')[1]+'/'+$(this).text());
+            $('#categories').val(valids);
+            $(this).remove();
+            return false;
+        });
+        //End
+	});
+</script>
+{% endblock %}
+{% block title_page %}{{ title_page }}{% endblock %}
+{% block tabs %}
+<ul>
+    <li><a href="/admin/page/new" class="icon-page-add margin-icon">Nueva Página</a></li>
+    <li><a href="/admin/page/view" class="icon-page-view margin-icon">Ver Páginas</a></li>  
+    <li><a href="#" class="active icon-page-edit margin-icon">Editar Página</a></li>  
+</ul>    
+{% endblock %}
+{% block content %}
+<form id="pageform" name="page" method="post" action="/admin/page/update" enctype="multipart/form-data">
+	<div class="span1">
+		<input type="hidden" value="{{page.key.urlsafe()}}" name="key" />
+		<p>Titulo Página:</p>
+		<p><input type="text" name="titlepage" id="titlepage" value="{{page.title}}" class="titletext" /></p>
+		<p>Resumen Página:</p>
+		<p><textarea name="summarypage" id="summarypage" style="width: 500px;height:50px;" >{{page.summary}}</textarea></p>
+        <p>Destacado:</p>
+        <p>
+            {% if page.featured %}
+            <input type="radio" name="featured" value="yes" checked> Si 
+            <input type="radio" name="featured" value="no"> No
+            {% else %}
+            <input type="radio" name="featured" value="yes"> Si 
+            <input type="radio" name="featured" value="no" checked> No
+            {% endif %}
+        </p> 
+		<p>Categoría:</p>
+		<div class="row" id="listcategories"><a href="/admin/category/view" class="btnblue" id="add_category"> <i class="fa fa-folder"></i>Agregar Categoría</a><span id="cat">{{categories}}</span></div>
+        <input type="hidden" name="categories" value="" id="categories" /><br>
+		<p>Imagen para cabecera de la página:{% if page.image_url != None %}<img src="{{page.image_url}}" width="100" />{%endif%}</p>
+		<p> <input type="file" name="imgpage" /></p>
+        <div class="barinsert">
+		<a href="/admin/files/image" title="Insertar Imagen" id="insertimage"  ><i class="fa fa-picture-o"></i> Insertar Imagen</a>
+            </div>
+		<textarea name="contentpage" style="width: 97%; height:450px;" id="contentpage">{{page.content}}</textarea>
+		<input type="submit" name="guardar_articulo" id="guardar_articulo" value="Guardar Página" class="boton-grande" />
+		<a href="/admin/page/delete?page={{page.key.urlsafe()}}&token={{token}}" class="btngreenlarge">Borrar página</a>
+	</div>
+</form>
+{% endblock %}

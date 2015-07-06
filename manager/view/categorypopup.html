@@ -1,0 +1,84 @@
+﻿{% extends "manager/view/base_popup.html" %}
+{% block head_extras %}
+<script type="text/javascript" src="/admin/static/scripts/jquery.sort.js"></script>
+<script type="text/javascript">
+var open = 1;
+var opens = new Array();
+var categories = new Array();
+Array.prototype.exists = function(o) {
+for(var i = 0; i < this.length; i++)
+   if(this[i] === o)
+     return true;
+return false;
+}
+Array.prototype.delete1 = function(o) {
+for(var i = 0; i < this.length; i++)
+	if(this[i] == o)
+		this.splice(i,1);
+}
+$(document).ready(function(){	
+	//Close popup
+    $("#close").click(function(){
+				parent.$.fancybox.close();
+                return false;
+			});  
+    //End
+	
+	//Agree popup
+    $("#agree").click(function(){
+				window.parent.insertcategory(categories,categories);
+                parent.$.fancybox.close();
+                return false;
+			});  
+    //End
+    
+    //Click Check category
+    $("#main input[type=checkbox]").live('click',function(){
+                if($(this).is(':checked')){
+                categories.push($(this).val());
+                }
+			});  
+    //End      
+
+});
+</script>
+{% endblock %}
+{% block title %} {{titlepopup}} {% endblock %}
+{% block content %}
+<div class="leftcol" id="categorylist">
+<ul id="main">
+{% for c in categories %}
+<li id="{{ c.category.key.id() }}">
+    <input type="checkbox" name="categoryval" value="{{ c.category.key.id() }}/{{ c.category.name }}" />
+    {{c.category.name}}
+    {%for s in c.subcategories%}
+    <ul>
+        <li><input type="checkbox" name="categoryval" value="{{ s.key.id() }}/{{ s.name }}" />{{s.name}}</li>
+    </ul>
+    {%endfor%}
+</li>
+{% endfor %}
+</ul>
+</div>
+<div class="rightcol">
+    <form action="/admin/category/add" method="post">
+        <input type="text" name="category" id="category" value=""/>
+        <div class="separation"></div>
+        {% if not categories %}
+        <input type="checkbox" name="parentbool" id="parentbool" value="parent" disabled>Crear subtipo de:
+        {% else %}
+        <input type="checkbox" name="parentbool" id="parentbool" value="parent">Crear subtipo de:
+        {% endif %}
+        <div class="separation"></div>
+        <select name="categories" id="categories">
+            {% for c in categories %}
+            <option value="{{c.category.key.id()}}">{{c.category.name}}</option>    
+            {% endfor %}
+        </select><br/><br/>
+        <p>
+        <input type="submit" name="categorybtn" id="add_category" class="btngreen" value="Agregar" class="boton-pequeno" /> 
+        <!-- <a href="/admin/category/edit" class="btngreen">Editar</a></p> -->
+    </form>
+</div>
+{% endblock %}
+

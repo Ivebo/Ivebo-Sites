@@ -1,0 +1,46 @@
+﻿{% extends "manager/view/base_popup.html" %}
+{% block head_extras %}
+<script type="text/javascript" src="/static/scripts/admin/jquery.sort.js"></script>
+<script type="text/javascript" src="http://scripts.ivbstatic.com/tools/jquery.validate.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){	
+	//Close popup
+    $("#close").click(function(){
+				parent.$.fancybox.close();
+                return false;
+			});  
+    //End
+	
+	//Agree popup
+    $("#agree").click(function(){
+				window.parent.insertcategory(categories,categories);
+                parent.$.fancybox.close();
+                return false;
+			});  
+    //End
+    $('#pageform').validate({
+            rules:{
+                category:'required',
+                summary:'required'
+            },
+            messages:{
+                category:'Nombre requerido',
+                summary:'Resumen requerido'
+            }
+        });   
+
+});
+</script>
+{% endblock %}
+{% block title %} {{titlepopup}} {% endblock %}
+{% block content %}
+<form id="pageform" name="page" method="post" action="/admin/category/edit" >
+    <input type="hidden" value="{{category.key}}" name="key" />
+<p>Nombre:<br/>
+<input type="text" name="category" id="category" value="{{category.name}}" class="titletext" /></p>
+<p>Resumen:<br/>
+<textarea name="summary" id="summary" style="width: 500px;height:50px;" >{{category.summary}}</textarea></p>
+<p><input type="submit" name="categorybtn" id="add_category" class="btngreen" value="Guardar" class="boton-pequeno" /> <a href="/admin/category/edit" class="btngreen">Cancelar</a></p>
+</form>
+{% endblock %}
+
