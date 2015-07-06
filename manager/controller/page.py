@@ -48,17 +48,7 @@ class PageAdmin(BaseHandler):
         userID = users.get_current_user().user_id()
         if action == 'new':
             nav_actual = 'pages'
-            html = ''
-            category = PageCategory.query(ancestor=site_key()).filter(PageCategory.category_parent == None).order(PageCategory.name)
-            for c in category:
-                if c.name_short != 'empty':
-                    html += '<option value="'+c.idcategory+'">'+c.name+'</option>'
-                    ct = PageCategory.query(PageCategory.category_parent == c.key)
-                    if ct:
-                        for c1 in ct:
-                            html += '<option value="'+c1.idcategory+'">--'+c1.name+'</option>'
             template_values = {
-                        'category':html,
                         'exit': text_exit,
                         'nav_actual': nav_actual
             }

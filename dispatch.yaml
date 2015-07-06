@@ -19,6 +19,10 @@ dispatch:
   - url: "www.sitioweb.com/admin*"
     module: admin
 
+  # Editor TinyMce
+  - url: "*/tinymce*"
+    module: admin
+
   # Module default
   - url: "www.sitioweb.com/*"
     module: default
