@@ -17,6 +17,7 @@
 
 #Library from Google
 from google.appengine.ext import ndb
+from google.appengine.api import search
 
 #Library
 from manager.utils.utils import *
@@ -24,7 +25,7 @@ from manager.utils.genID import PushID
 
 import os
 
-
+INDEX_PAGES = 'pages'
 
 class PageCategory(ndb.Model):
     name = ndb.StringProperty(required=True)
@@ -75,3 +76,12 @@ def GenId():
 def site_key():
   return ndb.Key('Site', os.environ['site'])
 
+def IndexPages(title, idpage, summary, content):
+    return search.Document(
+        doc_id = idpage,
+        fields=[search.TextField(name='title', value=title),
+                search.AtomField(name='idpage',value=idpage),
+                search.TextField(name='summary', value=summary),
+                search.HtmlField(name='content', value=content)
+            ]
+    )

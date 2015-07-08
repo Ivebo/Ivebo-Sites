@@ -225,6 +225,8 @@ class PageAdmin(BaseHandler):
                 page_model = page.put()
                 page_model = page_model.get()
                 if page_model:
+                    document = IndexPages(page_model.title, page_model.idpage, page_model.summary,page_model.content)
+                    search.Index(name=INDEX_PAGES).put(document)
                     if categories:
                         categories = categories.split(',')
                         for c in categories:
@@ -277,6 +279,8 @@ class PageAdmin(BaseHandler):
                 page_model = page.put()
                 page_model = page_model.get()
                 if page_model:
+                    document = IndexPages(page_model.title, page_model.idpage, page_model.summary,page_model.content)
+                    search.Index(name=INDEX_PAGES).put(document)
                     if categories:
                         categories = categories.split(',')
                         for c in categories:
@@ -361,6 +365,8 @@ class PageAdmin(BaseHandler):
                 page_model = page.put()
                 page_model = page_model.get()
                 if page_model:
+                    document = IndexPages(page_model.title, page_model.idpage, page_model.summary,page_model.content)
+                    search.Index(name=INDEX_PAGES).put(document)
                     page_in_category = PagesinCategory.query(ancestor=site_key()).filter(PagesinCategory.page == page_model.key)
                     for p in page_in_category:
                         p.key.delete()
@@ -410,6 +416,8 @@ class PageAdmin(BaseHandler):
                 page_model = page.put()
                 page_model = page_model.get()
                 if page_model:
+                    document = IndexPages(page_model.title, page_model.idpage, page_model.summary,page_model.content)
+                    search.Index(name=INDEX_PAGES).put(document)
                     page_in_category = PagesinCategory.query(ancestor=site_key()).filter(PagesinCategory.page == page_model.key)
                     for p in page_in_category:
                         p.key.delete()
