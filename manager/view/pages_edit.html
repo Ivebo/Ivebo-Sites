@@ -83,40 +83,70 @@ function insertcategory(array){
 {% block title_page %}{{ title_page }}{% endblock %}
 {% block tabs %}
 <ul>
-    <li><a href="/admin/page/new" class="icon-page-add margin-icon">Nueva Página</a></li>
-    <li><a href="/admin/page/view" class="icon-page-view margin-icon">Ver Páginas</a></li>  
-    <li><a href="#" class="active icon-page-edit margin-icon">Editar Página</a></li>  
+    <li><a href="/admin/page/new" class="icon-new-page margin-icon">Nueva Página</a></li>
+    <li><a href="/admin/page/view" class="icon-view-page margin-icon">Ver Páginas</a></li>  
+    <li><a href="#" class="active icon-edit margin-icon">Editar Página</a></li>  
 </ul>    
 {% endblock %}
 {% block content %}
 <form id="pageform" name="page" method="post" action="/admin/page/update" enctype="multipart/form-data">
-	<div class="span1">
-		<input type="hidden" value="{{page.key.urlsafe()}}" name="key" />
-		<p>Titulo Página:</p>
-		<p><input type="text" name="titlepage" id="titlepage" value="{{page.title}}" class="titletext" /></p>
-		<p>Resumen Página:</p>
-		<p><textarea name="summarypage" id="summarypage" style="width: 500px;height:50px;" >{{page.summary}}</textarea></p>
-        <p>Destacado:</p>
-        <p>
-            {% if page.featured %}
-            <input type="radio" name="featured" value="yes" checked> Si 
-            <input type="radio" name="featured" value="no"> No
-            {% else %}
-            <input type="radio" name="featured" value="yes"> Si 
-            <input type="radio" name="featured" value="no" checked> No
-            {% endif %}
-        </p> 
-		<p>Categoría:</p>
-		<div class="row" id="listcategories"><a href="/admin/category/view" class="btnblue" id="add_category"> <i class="fa fa-folder"></i>Agregar Categoría</a><span id="cat">{{categories}}</span></div>
-        <input type="hidden" name="categories" value="" id="categories" /><br>
-		<p>Imagen para cabecera de la página:{% if page.image_url != None %}<img src="{{page.image_url}}" width="100" />{%endif%}</p>
-		<p> <input type="file" name="imgpage" /></p>
+    <div class="col">
+	    <div class="span1">
+    		<input type="hidden" value="{{page.key.urlsafe()}}" name="key" />
+    		<p>Titulo:</p>
+        </div>
+        <div class="span2">
+		  <p><input type="text" name="titlepage" id="titlepage" value="{{page.title}}" class="titletext" /></p>
+        </div>
+    </div>
+    <div class="col">
+        <div class="span1">
+		  <p>Resumen:</p>
+        </div>
+        <div class="span2">
+		  <p><textarea name="summarypage" id="summarypage" class="titletext long" >{{page.summary}}</textarea></p>
+        </div>
+    </div>
+    <div class="col">
+        <div class="span1">
+            <p>Destacado:</p>
+        </div>
+        <div class="span2">
+            <p>
+                {% if page.featured %}
+                <input type="radio" name="featured" value="yes" checked> Si 
+                <input type="radio" name="featured" value="no"> No
+                {% else %}
+                <input type="radio" name="featured" value="yes"> Si 
+                <input type="radio" name="featured" value="no" checked> No
+                {% endif %}
+            </p> 
+        </div>
+    </div>
+    <div class="col">
+        <div class="span1">
+		  <p>Categoría:</p>
+        </div>
+        <div clas="span2">
+    		<div class="row" id="listcategories"><a href="/admin/category/view" class="btnblue" id="add_category"> <i class="fa fa-folder"></i>Agregar Categoría</a><span id="cat">{{categories}}</span></div>
+            <input type="hidden" name="categories" value="" id="categories" />
+        </div>
+    </div>
+    <div class="col">
+        <div class="span1">
+		  <p>Imagen:{% if page.image_url != None %}<img src="{{page.image_url}}" width="100" />{%endif%}</p>
+        </div>
+        <div class="span2">
+		  <p> <input type="file" name="imgpage" /></p>
+        </div>
+    </div>
+    <div class="col">
         <div class="barinsert">
 		<a href="/admin/files/image" title="Insertar Imagen" id="insertimage"  ><i class="fa fa-picture-o"></i> Insertar Imagen</a>
             </div>
 		<textarea name="contentpage" style="width: 97%; height:450px;" id="contentpage">{{page.content}}</textarea>
-		<input type="submit" name="guardar_articulo" id="guardar_articulo" value="Guardar Página" class="boton-grande" />
+    </div>
+		<input type="submit" name="guardar_articulo" id="guardar_articulo" value="Guardar Página" class="btngreenlarge" />
 		<a href="/admin/page/delete?page={{page.key.urlsafe()}}&token={{token}}" class="btngreenlarge">Borrar página</a>
-	</div>
 </form>
 {% endblock %}

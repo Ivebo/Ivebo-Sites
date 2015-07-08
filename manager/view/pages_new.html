@@ -97,30 +97,59 @@ function insertcategory(array){
 {% endblock %}
 {% block tabs %}
 <ul>
-    <li><a href="/admin/page/new" class="active icon-page-add margin-icon">Nueva Página</a></li>
-    <li><a href="/admin/page/view" class="icon-page-view margin-icon">Ver Páginas</a></li>  
+    <li><a href="/admin/page/new" class="active icon-new-page margin-icon">Nueva Página</a></li>
+    <li><a href="/admin/page/view" class="icon-view-page margin-icon">Ver Páginas</a></li>  
 </ul>    
 {% endblock %}
 {% block content %}
 <form id="pageform" name="page" method="post" action="/admin/page/save" enctype="multipart/form-data">
-	<div class="span1">
-		<p>Titulo Página:</p>
-		<p><input type="text" name="titlepage" id="titlepage" value="" class="titletext" /></p>
-		<p>Resumen Página:</p>
-		<p><textarea name="summarypage" id="summarypage" value="" style="width: 500px;height:50px;" ></textarea></p>
-        <p>Destacado:</p>
-        <p><input type="radio" name="featured" value="yes"> Si <input type="radio" name="featured" value="no" checked> No</p>
-		<p>Categoría:</p>
-		<p><div class="row" id="listcategories"><a href="/admin/category/view" class="btnblue" id="add_category"><i class="fa fa-folder"></i> Agregar Categoría</a><span id="cat"></span></div><input type="hidden" name="categories" value="" id="categories" /></p><br>
-		<p>Imagen para cabecera de la página:</p>
-		<p> <input type="file" name="imgpage" /></p>
+    <div class="col">
+    	<div class="span1">
+    		<p>Titulo:</p>
+        </div>
+        <div class="span2">
+    		<p><input type="text" name="titlepage" id="titlepage" value="" class="titletext" /></p>
+        </div>
+    </div>
+    <div class="col">
+        <div class="span1">
+		  <p>Resumen:</p>
+        </div>
+        <div class="span2">
+		  <p><textarea name="summarypage" id="summarypage" value="" class="titletext long" ></textarea></p>
+        </div>
+    </div>
+    <div class="col">
+        <div class="span1">
+            <p>Destacado:</p>
+        </div>
+        <div class="span2">
+            <p><input type="radio" name="featured" value="yes"> Si <input type="radio" name="featured" value="no" checked> No</p>
+        </div>
+    </div>
+    <div class="col">
+        <div class="span1">
+		  <p>Categoría:</p>
+        </div>
+        <div class="span2">
+		<p><div class="row" id="listcategories"><a href="/admin/category/view" class="btnblue" id="add_category"><i class="fa fa-folder"></i> Agregar Categoría</a><span id="cat"></span></div><input type="hidden" name="categories" value="" id="categories" /></p>
+        </div>
+    </div>
+    <div class="col">
+        <div class="span1">
+		  <p>Imagen:</p>
+        </div>
+        <div class="span2">
+		  <p> <input type="file" name="imgpage" /></p>
+        </div>
+    </div>
+    <div class="col">
         <div class="barinsert">
 		<a href="/admin/files/image" title="Insertar Imagen" id="insertimage" ><i class="fa fa-picture-o"></i> Insertar Imagen</a>
             </div>
         <!--<a href="/admin/gallery/admin?page=key" id="addgallery" class="btneditor" >Agregar Galería</a>-->
 		<textarea name="contentpage" style="width: 97%; height:450px;" id="contentpage"></textarea>
-		<br/> 
-		<input type="submit" name="guardar_articulo" id="guardar_articulo" value="Guardar Página" class="btngreenlarge" />
 	</div>
+		<input type="submit" name="guardar_articulo" id="guardar_articulo" value="Guardar Página" class="btngreenlarge" />
 </form>
 {% endblock %}

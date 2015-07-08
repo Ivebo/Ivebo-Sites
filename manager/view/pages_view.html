@@ -1,27 +1,43 @@
 ﻿{% extends "manager/view/base.html" %}
 {% block tabs %}
 <ul>
-    <li><a href="/admin/page/new" class="icon-page-add margin-icon">Nueva Página</a></li>
-    <li><a href="/admin/page/view" class="active icon-page-view margin-icon">Ver Páginas</a></li>  
+    <li><a href="/admin/page/new" class="icon-new-page margin-icon">Nueva Página</a></li>
+    <li><a href="/admin/page/view" class="active icon-view-page margin-icon">Ver Páginas</a></li>  
 </ul>    
 {% endblock %}
 {% block content %}
-	<div class="span1">
+	<div class="box list_pages pb">
 		{% if view == 'category'%}
 		<h2><a href="/admin/page/view">Inicio</a> / {%if catactual != 'Inicio'%}{{catactual}}{%endif%}</h2>
-		{% for c in category %}
-		<a href="/admin/page/view?key={{c.key}}&view=category"><div class="pageitem">
-			<img src="/admin/static/images/folder.png" width="64" height="64">
-			<p>{{c.name|truncate(25)}}</p>
-		</div></a>
-		{% endfor %}
-		{% for p in pages %}
-		<a href="/admin/page/edit?key={{p.key}}&token={{token}}" title="{{p.title}}"><div class="pageitem">
-			<img src="/admin/static/images/page_edit.png" width="64" height="64" title="{{p.title}}">
-			<p>{{p.title|truncate(25)}}</p>
-		</div></a>
-		{% endfor %}
-		<div class="clear"></div>
 		{% endif %}
+		<table class="list-view">
+			<thead>
+				<tr>
+					<th>Objeto</th>
+					<th>ID</th>
+					<th>Fecha Creación</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for c in category %}
+				<tr>
+					<td>
+						<a href="/admin/page/view?key={{c.key}}&view=category" class="icon-category margin-icon">{{c.name}}</a>
+					</td>
+					<td>{{c.idcategory}}</td>
+					<td>{{c.date_publication.strftime("%d/%m/%Y")}}</td>
+				</tr>
+				{% endfor %}
+				{% for p in pages %}
+				<tr>
+					<td>
+						<a href="/admin/page/edit?key={{p.key}}&token={{token}}" title="{{p.title}}" class="icon-page margin-icon">{{p.title}}</a>
+					</td>
+					<td>{{p.idpage}}</td>
+					<td>{{p.date_publication.strftime("%d/%m/%Y")}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	</div>
 {% endblock %}

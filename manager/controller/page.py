@@ -44,7 +44,9 @@ from manager.libs.sessions import *
 
 class PageAdmin(BaseHandler):
     def get(self, action):
-        text_exit = users.get_current_user().email()+' | <a href=\"'+users.create_logout_url("/admin")+'\">(salir)</a>'
+        email_admin = users.get_current_user().email()
+        url_logout = users.create_logout_url("/admin")
+        text_exit = {'email':email_admin,'url':url_logout}
         userID = users.get_current_user().user_id()
         if action == 'new':
             nav_actual = 'pages'
@@ -61,20 +63,20 @@ class PageAdmin(BaseHandler):
                 category = PageCategory.query(ancestor=site_key()).filter(PageCategory.category_parent == None).order(PageCategory.name)
                 for c in category:
                     if c.name_short != 'empty':
-                        categories_array.append({'name':c.name,'key':c.key.urlsafe()})
+                        categories_array.append({'name':c.name,'key':c.key.urlsafe(),'idcategory':c.idcategory,'date_publication':c.date_publication})
                 nav_actual = 'pages'
                 cat_empty = PageCategory.query(PageCategory.name_short == 'empty').get()
                 pages_in_catgegory = PagesinCategory.query(PagesinCategory.category == cat_empty.key).order(-PagesinCategory.date_publication)
                 pages =[]
                 for p in pages_in_catgegory:
                     page = p.page.get()
-                    pages.append({'title':page.title,'key':page.key.urlsafe()})
+                    pages.append({'title':page.title,'key':page.key.urlsafe(),'idpage':page.idpage,'date_publication':page.date_publication})
                 token = urllib.quote(CreateXsrfToken('delete'))
                 template_values = {
                         'category': categories_array,
                         'exit': text_exit,
                         'nav_actual': nav_actual,
-                        'view':'category',
+                        'view':'home',
                         'catactual':'Inicio',
                         'pages':pages,
                         'token':token
@@ -90,12 +92,12 @@ class PageAdmin(BaseHandler):
                 category = PageCategory.query(ancestor=site_key()).filter(PageCategory.category_parent == viewcategory.key).order(PageCategory.name)
                 for c in category:
                     if c.name_short != 'empty':
-                        categories_array.append({'name':c.name,'key':c.key.urlsafe()})
+                        categories_array.append({'name':c.name,'key':c.key.urlsafe(),'idcategory':c.idcategory,'date_publication':c.date_publication})
                 pages_in_catgegory = PagesinCategory.query(PagesinCategory.category == viewcategory.key).order(-PagesinCategory.date_publication)
                 pages =[]
                 for p in pages_in_catgegory:
                     page = p.page.get()
-                    pages.append({'title':page.title,'key':page.key.urlsafe()})
+                    pages.append({'title':page.title,'key':page.key.urlsafe(),'idpage':page.idpage,'date_publication':page.date_publication})
                 nav_actual = 'pages'
                 try:
                     parentcategory = viewcategory.category_parent

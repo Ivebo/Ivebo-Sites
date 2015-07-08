@@ -1,6 +1,4 @@
-﻿@charset "utf-8";
-@import url(http://fonts.googleapis.com/css?family=Fugaz+One);
-/* Copyright 2012 Ivebo.
+﻿/* Copyright 2012 Ivebo.
 #
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License as published by
@@ -14,158 +12,170 @@
 
 #You should have received a copy of the GNU General Public License
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
-#page{
-    position:relative;
+@charset "utf-8";
+html, body {
+  margin: 0;
+  min-height: 100%;
+  padding: 0;
+  height: 100%;
+  color: #757575;
 }
-
+a{
+    color: #0288d1;
+}
 h2{
     margin-top:15px;
     margin-bottom:30px;
 }
-
-/*Estilos para la cabecera de la aplicación*/
 #header{
-	height: 40px;
-    background-color: #0288d1; /* Old browsers */
-    position: fixed;
+	height: 50px;
+    background-color: #263237; /* Old browsers */
+    /*position: fixed;*/
     width: 100%;
     z-index: 999;
+    margin-top: -50px;
 }
-#header h1 {
-	font-size: 25px;
-    font-family: 'Fugaz One', cursive;
-    text-transform: uppercase;
-	color: #fff;
-    background-repeat: no-repeat;
-    /*width: 50px;*/
-    padding-left: 32px;
-    margin-top:9px;
-    float:left;
-    display:block;
+#header .logo{
+    height: 30px;
+    margin:9px 0 0 15px;
 }
 #header #exit{
     float:right;
 	font-size: 80%;
 	font-weight: bold;
     color: #fff;
-    margin-top:10px;
+    margin-top:17px;
+    margin-right: 20px;
 }
 #header #exit a{
 	font-size: 110%;
     color: #fff;
+    text-decoration: none;
 }
-.center{
-    margin: auto;
-    width: 1000px;
+#wrapper {
+  bottom: 0;
+  left: 0;
+  padding: 50px 0 0 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+#wrapper_content{
+    min-height: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 100%;
+    min-height: 100%;
     position: relative;
+    width: 100%;
 }
-/*Fin*/
-
-/*Estilos para le seccion principal de la aplicacion*/
-#main{
-    padding-top: 38px;
-    margin: auto;
-    width: 1000px;
-}
-/*fin*/
-
-/*Estilos para la barra de subaplicaciones*/
-#sidebar{
-	width : 180px;
+#main{  
     float: left;
-    position: fixed;
-    z-index: 999;
+    width: 100%;
+    position:relative;
+    background-color: #f5f5f5 !important;
+    height: 100%;
+    overflow: auto;
+}
+#sidebar{
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box; 
+    box-sizing:border-box;
+    float: left;
+    width: 220px; /*Width of left column*/
+    margin-left: -100%;
+    overflow: auto;
+    position: relative;
+    background: #43575f !important;
+    height: 100%;
+}
+#sidebar a:before{
+    margin-right: 20px;
+    font-size: 38px;
+    vertical-align: middle;
+    top: 0 !important;
 }
 #sidebar ul{
 	padding-top: 20px;
 	list-style-type: none;
 }
 #sidebar li{
-    margin-bottom: 5px;
+    margin-bottom: 15px;
 }
 #sidebar ul li a {
 	display: block;
 	text-decoration: none;
-	color: #346A9F;
-	font-size: 16px;
-	padding-top: 8px;
-	padding-right: 10px;
-	padding-bottom: 8px;
-	padding-left: 13px;
+	color: #757575;
+	font-size: 14px;
+    padding: 15px 18px 15px 18px;
 	-webkit-transition: background-color 0.1s ease-in;
     -moz-transition:background-color 0.1s ease-in;
     -o-transition: background-color 0.1s ease-in;
-}
+    font-weight: bold;
+}   
 #sidebar ul li a.actual   {
-    background-color:#ffa726; 
-	color: #FFF!important;
+    background-color:#00BCD4; 
+	color: #fff!important;
 }
 #sidebar ul li a.hover:hover {
-	background-color: #ffe0b2;
+	background-color: #00BCD4;
 }
-/*Fin*/
-
-/*Estilos para las opciones de cada aplicacion*/
 #tabs{
-    border-top: 1px solid #e8eff7;
-    border-bottom: 1px solid #e8eff7;
+    background-color: #fff;
+    margin-bottom: 20px;
 }
 #tabs ul{
     list-style-type: none; 
-    padding-left: 20px;
 }
 #tabs li{
     display: inline;
 }
 #tabs a{
-    color: #356AA0;
-    font-size: 16px;
+    color: #757575;
+    font-size: 14px;
     display: block;
     float: left;
-    height: 24px;
-    padding-top: 8px;
-    padding-right: 15px;
-    padding-left: 15px;
+    padding: 12px 0;
     text-decoration:none;
+    margin: 0 10px;
+    -webkit-transition: all 100ms; /* Safari */
+    transition: all 100ms;
+}
+#tabs a:hover{
+    color:#0288d1;
+    text-decoration: none;
+    border-bottom: solid 3px #0288d1; 
 }
 #tabs .active{
-    background: #0288d1; 
-    color: #fff;
-	text-decoration: none;	
+    color:#0288d1;
+	text-decoration: none;
+    border-bottom: solid 3px #0288d1; 
+    font-weight: bold;
 }
-/*Fin*/
-
-/*Estilos para el contenido de cada aplicación*/
 #content{
-	background-color: #f3f7fb;
-	border: 1px solid #9fc1e4;
-    float: left;
-    width:780px;
-    position:relative;
-    margin-left: 180px;
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box; 
+    box-sizing:border-box;
+    margin-left: 220px; /*Set left margin to LeftColumnWidth*/
+    padding: 30px 30px 40px 30px;
 }
-#content #title {
-	background-color: #FFF;
-	height: 50px;
-	font-size: 25px;
-	color: #333;
-}
-#content #title span {
-	display: block;
-	margin-left: 20px;
-	padding-top: 15px;
+.col{
+    padding:20px 15px;
 }
 .span1{
-    padding-top: 15px;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-bottom: 15px;
-    background-color: #fff;
+    float:left;
+    width:200px;
 }
 .span1 p{
-    margin-bottom: 8px;
+    margin-left: 30px;
+    font-size:14px;
+    font-weight: bold;
+    color: #757575;
 }
-
+.span2{
+    overflow:hidden;
+}
 #footer{
     margin: 15px 20px 15px 0;
 	padding : 5px;
@@ -185,13 +195,29 @@ h2{
 .clear{
     clear: both;
 }
-
+.center{
+    margin: auto;
+    width: 1000px;
+    position: relative;
+}
 /*Estilos cajas de texto*/
 .titletext{
-    font-size: 20px;
-    width: 500px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     padding: 4px;
-    border: 1px solid #CCC;
+    border:none;
+    border-bottom: 1px solid #CCC;
+    outline: none;
+}
+.titletext:focus{
+    border-bottom: 1px solid #00BCD4;
+}
+.titletext.long{
+    height: 70px;
+    resize:none;
 }
 /*Fin*/
 
@@ -213,19 +239,6 @@ h2{
 }
 .boton-pequeno:hover{
     border: 1px solid #666 ;
-}
-.boton-grande{
-    border: 1px solid #fb9d23 ;
-	color: #FFF;
-	font-size: 20px;
-    padding: 3px;
-    background: #ffa84c; /* old browsers */
-    background: -moz-linear-gradient(top, #ffa84c 0%, #ff7b0d 100%); /* firefox */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffa84c), color-stop(100%,#ff7b0d)); /* webkit */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffa84c', endColorstr='#ff7b0d',GradientType=0 ); /* ie */
-}
-.boton-grande:hover{
-    border: 1px solid #925503 ;
 }
 /*Fin*/
 
@@ -387,6 +400,7 @@ background: linear-gradient(top, rgba(93,167,240,1) 1%,rgba(35,135,234,1) 100%);
     background: linear-gradient(top, rgba(56,178,80,1) 1%,rgba(43,139,63,1) 100%); /* W3C */
 }
 .btnblue{
+    display: inline-block;
     text-decoration: none;
     border: 1px solid #5291D1;
     font-size: 12px;
@@ -407,6 +421,9 @@ background: linear-gradient(top, rgba(93,167,240,1) 1%,rgba(35,135,234,1) 100%);
     border-radius:3px;
     cursor:pointer;
     font-family: Arial, Helvetica, sans-serif;
+    -webkit-transition: all 1s; /* Safari */
+    transition: all 1s;
+
 }
 .btnblue:hover  {
     text-decoration: none;
@@ -491,34 +508,45 @@ background: linear-gradient(top, rgba(93,167,240,1) 1%,rgba(35,135,234,1) 100%);
     text-decoration:underline;
 }
 /*End*/
-/*Paginación paginas*/
-.pageitem{
-    padding:8px;
-    float:left;
-    width:100px;
-    height:120px;
-    text-align:center;
-    border: solid #fff 1px;
-    overflow: hidden;
+.box{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+    background-color: #fff;
 }
-.pageitem:hover{
-    background: #ffffff; /* Old browsers */
-    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
-    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIxJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjYmRiZWIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-    background: -moz-linear-gradient(top, #ffffff 1%, #cbdbeb 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#ffffff), color-stop(100%,#cbdbeb)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #ffffff 1%,#cbdbeb 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #ffffff 1%,#cbdbeb 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #ffffff 1%,#cbdbeb 100%); /* IE10+ */
-    background: linear-gradient(to bottom, #ffffff 1%,#cbdbeb 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#cbdbeb',GradientType=0 ); /* IE6-8 */
-    border: solid #6493c3 1px;
+.pb{
+    padding:20px 15px;
 }
-.pageitem.border-top{
-    border-top:solid 1px #EBEBEB;
+.list-view{
+    position: relative;
+    border: 1px solid rgba(0,0,0,.12);
+    border-collapse: collapse;
+    white-space: nowrap;
+    font-size: 15px;
+    background-color: #fff;
+    width: 100%;
 }
-.pageitem p{
-    font-size:15px;
-    margin-top:8px;
+.list-view th{
+    text-align: left;
+    position: relative;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0;
+    font-size: 16px;
+    color: rgba(0,0,0,.54);
+    padding: 15px 18px 15px 18px;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(0,0,0,.12);
 }
-/*End*/
+.list-view td{
+    position: relative;
+    vertical-align: top;
+    /*border-top: 1px solid rgba(0,0,0,.12);*/
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    padding: 20px 18px 20px 18px;
+    box-sizing: border-box;
+}
+.list-view a{
+    color:#757575;
+    text-decoration: none;
+}

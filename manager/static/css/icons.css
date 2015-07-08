@@ -2,8 +2,9 @@
 .margin-icon:before{
     position: relative;
     top:.15em;
-    margin-right: .5em;
+    margin-right: .6em;
 }
+
 
 @font-face {
   font-family: "sites";
@@ -43,24 +44,24 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-page-view:before {
-  content: "a";
+.icon-page:before {
+  content: "h";
 }
-.icon-page-add:before {
-  content: "b";
+.icon-exit:before {
+  content: "i";
 }
-.icon-pages:before {
-  content: "c";
+.icon-home:before {
+  content: "j";
+}
+.icon-new-page:before {
+  content: "k";
+}
+.icon-view-page:before {
+  content: "l";
 }
 .icon-category:before {
-  content: "d";
+  content: "a";
 }
-.icon-image:before {
-  content: "e";
-}
-.icon-user:before {
-  content: "f";
-}
-.icon-page-edit:before {
-  content: "g";
+.icon-edit:before {
+  content: "c";
 }
