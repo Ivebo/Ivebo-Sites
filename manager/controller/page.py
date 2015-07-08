@@ -159,6 +159,8 @@ class PageAdmin(BaseHandler):
                     # blobstore.delete(page.gs_key)
                     images.delete_serving_url(page.gs_key)
                     gcs.delete(page.gs_filename)
+                doc_index = search.Index(name=INDEX_PAGES)
+                doc_index.delete(page.idpage)
                 page.key.delete()
                 page_in_category.key.delete()
                 self.redirect('/admin/page/new')
