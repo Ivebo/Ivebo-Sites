@@ -66,7 +66,7 @@ class PageAdmin(BaseHandler):
                         categories_array.append({'name':c.name,'key':c.key.urlsafe(),'idcategory':c.idcategory,'date_publication':c.date_publication})
                 nav_actual = 'pages'
                 cat_empty = PageCategory.query(PageCategory.name_short == 'empty').get()
-                pages_in_catgegory = PagesinCategory.query(PagesinCategory.category == cat_empty.key).order(-PagesinCategory.date_publication)
+                pages_in_catgegory = PagesinCategory.query(ancestor=site_key()).filter(PagesinCategory.category == cat_empty.key).order(-PagesinCategory.date_publication)
                 pages =[]
                 for p in pages_in_catgegory:
                     page = p.page.get()
@@ -93,7 +93,7 @@ class PageAdmin(BaseHandler):
                 for c in category:
                     if c.name_short != 'empty':
                         categories_array.append({'name':c.name,'key':c.key.urlsafe(),'idcategory':c.idcategory,'date_publication':c.date_publication})
-                pages_in_catgegory = PagesinCategory.query(PagesinCategory.category == viewcategory.key).order(-PagesinCategory.date_publication)
+                pages_in_catgegory = PagesinCategory.query(ancestor=site_key()).filter(PagesinCategory.category == viewcategory.key).order(-PagesinCategory.date_publication)
                 pages =[]
                 for p in pages_in_catgegory:
                     page = p.page.get()
@@ -124,7 +124,7 @@ class PageAdmin(BaseHandler):
             page_key = cgi.escape(self.request.get('key'))
             page = ndb.Key(urlsafe=page_key)
             page = page.get()
-            categories = PagesinCategory.query(PagesinCategory.page == page.key).order(-PagesinCategory.date_publication)
+            categories = PagesinCategory.query(ancestor=site_key()).filter(PagesinCategory.page == page.key).order(-PagesinCategory.date_publication)
             htmlcategories = ''
             responsegroups = {}
             categoiresnames = []
@@ -150,8 +150,15 @@ class PageAdmin(BaseHandler):
             page_key = cgi.escape(self.request.get('page'))
             token = self.request.get('token')
             if ValidateXsrfToken(token,'delete'):
-                page = model.page.Page.get(page_key)
-                page.delete()
+                page_key = ndb.Key(urlsafe=page_key)
+                page = page_key.get()
+                page_in_category = PagesinCategory.query(PagesinCategory.page == page.key).get()
+                if page.gs_key and page.gs_filename:
+                    # blobstore.delete(page.gs_key)
+                    images.delete_serving_url(page.gs_key)
+                    gcs.delete(page.gs_filename)
+                page.key.delete()
+                page_in_category.key.delete()
                 self.redirect('/admin/page/new')
             else:
                 self.redirect('/admin/page/view')
@@ -207,6 +214,7 @@ class PageAdmin(BaseHandler):
                     idpage = idpage,
                     image_url = url,
                     gs_key = gs_key,
+                    gs_filename = filename,
                     content = content,
                     date_publication = datetime.datetime.utcnow()-datetime.timedelta(hours=5),
                     summary= summary,
@@ -225,7 +233,8 @@ class PageAdmin(BaseHandler):
                             page_in_category = PagesinCategory(
                                 page = page_model.key,
                                 category = cat.key,
-                                date_publication = datetime.datetime.utcnow()
+                                date_publication = datetime.datetime.utcnow(),
+                                parent = site_key()
                                 )
                             page_in_category.put()
                         self.redirect('/admin/page/new') 
@@ -244,7 +253,8 @@ class PageAdmin(BaseHandler):
                         page_in_category = PagesinCategory(
                             page = page_model.key,
                             category = category_empty.key,
-                            date_publication = datetime.datetime.utcnow()
+                            date_publication = datetime.datetime.utcnow(),
+                            parent = site_key()
                             )
                         page_in_category.put()
                         self.redirect('/admin/page/new')
@@ -256,6 +266,7 @@ class PageAdmin(BaseHandler):
                     idpage = idpage,
                     image_url = None,
                     gs_key = None,
+                    gs_filename = None,
                     content = content,
                     date_publication = datetime.datetime.utcnow(),
                     summary= summary,
@@ -274,7 +285,8 @@ class PageAdmin(BaseHandler):
                             page_in_category = PagesinCategory(
                                 page = page_model.key,
                                 category = cat.key,
-                                date_publication = datetime.datetime.utcnow()
+                                date_publication = datetime.datetime.utcnow(),
+                                parent = site_key()
                                 )
                             page_in_category.put()
                         self.redirect('/admin/page/new') 
@@ -292,7 +304,8 @@ class PageAdmin(BaseHandler):
                         page_in_category = PagesinCategory(
                             page = page_model.key,
                             category = category_empty.key,
-                            date_publication = datetime.datetime.utcnow()
+                            date_publication = datetime.datetime.utcnow(),
+                            parent = site_key()
                             )
                         page_in_category.put()
                         self.redirect('/admin/page/new')
@@ -340,6 +353,7 @@ class PageAdmin(BaseHandler):
                 page.title_short = title_short(title)
                 page.image_url = url
                 page.gs_key = gs_key
+                page.gs_filename = filename
                 page.content = content
                 page.summary= summary
                 page.featured = featured
@@ -347,7 +361,7 @@ class PageAdmin(BaseHandler):
                 page_model = page.put()
                 page_model = page_model.get()
                 if page_model:
-                    page_in_category = PagesinCategory.query(PagesinCategory.page == page_model.key)
+                    page_in_category = PagesinCategory.query(ancestor=site_key()).filter(PagesinCategory.page == page_model.key)
                     for p in page_in_category:
                         p.key.delete()
                     if categories:
@@ -358,7 +372,8 @@ class PageAdmin(BaseHandler):
                             page_in_category = PagesinCategory(
                                 page = page_model.key,
                                 category = cat.key,
-                                date_publication = datetime.datetime.utcnow()
+                                date_publication = datetime.datetime.utcnow(),
+                                parent = site_key()
                                 )
                             page_in_category.put()
                         self.redirect('/admin/page/view') 
@@ -376,7 +391,8 @@ class PageAdmin(BaseHandler):
                         page_in_category = PagesinCategory(
                             page = page_model.key,
                             category = category_empty.key,
-                            date_publication = datetime.datetime.utcnow()
+                            date_publication = datetime.datetime.utcnow(),
+                            parent = site_key()
                             )
                         page_in_category.put()
                         self.redirect('/admin/page/view')
@@ -386,6 +402,7 @@ class PageAdmin(BaseHandler):
                 if not page.image_url:
                     page.image_url = None
                     page.gs_key = None
+                    page.gs_filename = None
                 page.content = content
                 page.summary= summary
                 page.featured = featured
@@ -393,7 +410,7 @@ class PageAdmin(BaseHandler):
                 page_model = page.put()
                 page_model = page_model.get()
                 if page_model:
-                    page_in_category = PagesinCategory.query(PagesinCategory.page == page_model.key)
+                    page_in_category = PagesinCategory.query(ancestor=site_key()).filter(PagesinCategory.page == page_model.key)
                     for p in page_in_category:
                         p.key.delete()
                     if categories:
@@ -404,7 +421,8 @@ class PageAdmin(BaseHandler):
                             page_in_category = PagesinCategory(
                                 page = page_model.key,
                                 category = cat.key,
-                                date_publication = datetime.datetime.utcnow()
+                                date_publication = datetime.datetime.utcnow(),
+                                parent = site_key()
                                 )
                             page_in_category.put()
                         self.redirect('/admin/page/view') 
@@ -422,7 +440,8 @@ class PageAdmin(BaseHandler):
                         page_in_category = PagesinCategory(
                             page = page_model.key,
                             category = category_empty.key,
-                            date_publication = datetime.datetime.utcnow()
+                            date_publication = datetime.datetime.utcnow(),
+                            parent = site_key()
                             )
                         page_in_category.put()
                         self.redirect('/admin/page/view')

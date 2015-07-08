@@ -44,6 +44,7 @@ class Page(ndb.Model):
     idpage = ndb.StringProperty(required=True)
     image_url = ndb.StringProperty()
     gs_key = ndb.StringProperty()
+    gs_filename = ndb.StringProperty()
     content = ndb.TextProperty()
     summary = ndb.StringProperty()
     order = ndb.IntegerProperty()
