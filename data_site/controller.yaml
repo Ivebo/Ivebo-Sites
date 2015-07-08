@@ -34,6 +34,9 @@ handlers:
 - url: /list/(.*)
   script: data_site.controller.list.app
 
+- url: /webhook-page
+  script: data_site.controller.webhook-page.app
+
 
 #Individual pages 
 - url: (/()|/(.*))

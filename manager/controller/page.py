@@ -20,6 +20,8 @@ from google.appengine.api import users
 from google.appengine.api import images
 from google.appengine.api import memcache
 from google.appengine.ext import blobstore
+from google.appengine.api import urlfetch
+import urllib
 
 #Library System
 import datetime
@@ -225,6 +227,17 @@ class PageAdmin(BaseHandler):
                 page_model = page.put()
                 page_model = page_model.get()
                 if page_model:
+                    if os.environ['webhook_page'] != '':
+                        form_fields = {
+                          'idpage': page_model.idpage,
+                          'app_id':os.environ['app_id']
+                        }
+                        form_data = urllib.urlencode(form_fields)
+                        url = os.environ['webhook_page']
+                        result = urlfetch.fetch(url=url,
+                            payload=form_data,
+                            method=urlfetch.POST,
+                            headers={'Content-Type': 'application/x-www-form-urlencoded'})
                     document = IndexPages(page_model.title, page_model.idpage, page_model.summary,page_model.content)
                     search.Index(name=INDEX_PAGES).put(document)
                     if categories:
@@ -279,6 +292,17 @@ class PageAdmin(BaseHandler):
                 page_model = page.put()
                 page_model = page_model.get()
                 if page_model:
+                    if os.environ['webhook_page'] != '':
+                        form_fields = {
+                          'idpage': page_model.idpage,
+                          'app_id':os.environ['app_id']
+                        }
+                        form_data = urllib.urlencode(form_fields)
+                        url = os.environ['webhook_page']
+                        result = urlfetch.fetch(url=url,
+                            payload=form_data,
+                            method=urlfetch.POST,
+                            headers={'Content-Type': 'application/x-www-form-urlencoded'})
                     document = IndexPages(page_model.title, page_model.idpage, page_model.summary,page_model.content)
                     search.Index(name=INDEX_PAGES).put(document)
                     if categories:
@@ -365,6 +389,17 @@ class PageAdmin(BaseHandler):
                 page_model = page.put()
                 page_model = page_model.get()
                 if page_model:
+                    if os.environ['webhook_page'] != '':
+                        form_fields = {
+                          'idpage': page_model.idpage,
+                          'app_id':os.environ['app_id']
+                        }
+                        form_data = urllib.urlencode(form_fields)
+                        url = os.environ['webhook_page']
+                        result = urlfetch.fetch(url=url,
+                            payload=form_data,
+                            method=urlfetch.POST,
+                            headers={'Content-Type': 'application/x-www-form-urlencoded'})
                     document = IndexPages(page_model.title, page_model.idpage, page_model.summary,page_model.content)
                     search.Index(name=INDEX_PAGES).put(document)
                     page_in_category = PagesinCategory.query(ancestor=site_key()).filter(PagesinCategory.page == page_model.key)
@@ -416,6 +451,17 @@ class PageAdmin(BaseHandler):
                 page_model = page.put()
                 page_model = page_model.get()
                 if page_model:
+                    if os.environ['webhook_page'] != '':
+                        form_fields = {
+                          'idpage': page_model.idpage,
+                          'app_id':os.environ['app_id']
+                        }
+                        form_data = urllib.urlencode(form_fields)
+                        url = os.environ['webhook_page']
+                        result = urlfetch.fetch(url=url,
+                            payload=form_data,
+                            method=urlfetch.POST,
+                            headers={'Content-Type': 'application/x-www-form-urlencoded'})
                     document = IndexPages(page_model.title, page_model.idpage, page_model.summary,page_model.content)
                     search.Index(name=INDEX_PAGES).put(document)
                     page_in_category = PagesinCategory.query(ancestor=site_key()).filter(PagesinCategory.page == page_model.key)
