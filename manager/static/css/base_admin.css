@@ -519,7 +519,6 @@ background: linear-gradient(top, rgba(93,167,240,1) 1%,rgba(35,135,234,1) 100%);
     position: relative;
     border: 1px solid rgba(0,0,0,.12);
     border-collapse: collapse;
-    white-space: nowrap;
     font-size: 15px;
     background-color: #fff;
     width: 100%;
@@ -549,4 +548,5 @@ background: linear-gradient(top, rgba(93,167,240,1) 1%,rgba(35,135,234,1) 100%);
 .list-view a{
     color:#757575;
     text-decoration: none;
+    line-height: 20px;
 }
