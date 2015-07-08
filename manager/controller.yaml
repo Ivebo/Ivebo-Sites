@@ -41,3 +41,7 @@ handlers:
   script: manager.controller.start.app
   login: admin
 
+- url: /admin/setup
+  script: manager.controller.setup.app
+  login: admin
+
