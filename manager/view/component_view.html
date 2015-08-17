@@ -1,0 +1,31 @@
+﻿{% extends "manager/view/base.html" %}
+{% block tabs %}
+<ul>
+    <li><a href="/admin/component/new" class="icon-new-page margin-icon">Nuevo Componente</a></li>
+    <li><a href="/admin/component/view" class="active icon-view-page margin-icon">Ver Componentes</a></li>  
+</ul>    
+{% endblock %}
+{% block content %}
+	<div class="box list_pages pb">
+		<table class="list-view">
+			<thead>
+				<tr>
+					<th>Componente</th>
+					<th>ID</th>
+					<th>Fecha Creación</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for c in components %}
+				<tr>
+					<td>
+						<a href="/admin/component/edit?key={{c.key.urlsafe()}}&token={{token}}" title="{{c.title}}" class="icon-page margin-icon">{{c.title}}</a>
+					</td>
+					<td>{{c.idcomponent}}</td>
+					<td>{{c.date_publication.strftime("%d/%m/%Y")}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

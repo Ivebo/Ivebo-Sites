@@ -1,0 +1,94 @@
+﻿{% extends "manager/view/base.html" %}
+{% block head_extras %}
+<script type="text/javascript" src="/tinymce/tiny_mce.js"></script>
+<script type="text/javascript" src="/admin/static/scripts/jquery.validate.js"></script>
+<script type="text/javascript">
+function getIframeWindow(iframe_object) {
+  var doc;
+
+  if (iframe_object.contentWindow) {
+    return iframe_object.contentWindow;
+  }
+
+  if (iframe_object.window) {
+    return iframe_object.window;
+  } 
+
+  if (!doc && iframe_object.contentDocument) {
+    doc = iframe_object.contentDocument;
+  } 
+
+  if (!doc && iframe_object.document) {
+    doc = iframe_object.document;
+  }
+
+  if (doc && doc.defaultView) {
+   return doc.defaultView;
+  }
+
+  if (doc && doc.parentWindow) {
+    return doc.parentWindow;
+  }
+
+  return undefined;
+}
+	$(document).ready(function(){
+       
+            $('#pageform').validate({
+                rules:{
+                    titlecomponent:'required'
+                },
+                messages:{
+                    titlecomponent:'Título requerido'
+                },
+               //perform an AJAX post to ajax.php
+               submitHandler: function() {
+                    $("#guardar").attr('disabled','disabled');
+                      var el = document.getElementById('editorweb');
+                      content = getIframeWindow(el).getContent();
+                       $.post('/admin/component/save', { id: '{{id}}', component: content, title: $('#titlecomponent').val(), summary: $('#summarycomponent').val() } , function(data) {
+                            if(data == 'error'){
+                                alert('Error al guardar la plantilla');
+                            }
+                            else{
+                                alert('Componente Guardado');
+                                location.reload();
+                            }
+                        });
+                }
+            }); 
+	});
+</script>
+{% endblock %}
+{% block tabs %}
+<ul>
+    <li><a href="/admin/component/new" class="active icon-new-page margin-icon">Nuevo Componente</a></li>
+    <li><a href="/admin/component/view" class="icon-view-page margin-icon">Ver Componentes</a></li>  
+</ul>    
+{% endblock %}
+{% block content %}
+<form id="pageform" name="page" method="post" action="/admin/component/save" enctype="multipart/form-data">
+    <div class="col">
+    	<div class="span1">
+    		<p>Titulo:</p>
+        </div>
+        <div class="span2">
+    		<p><input type="text" name="titlecomponent" id="titlecomponent" value="" class="titletext" /></p>
+        </div>
+    </div>
+    <div class="col">
+        <div class="span1">
+		  <p>Resumen:</p>
+        </div>
+        <div class="span2">
+		  <p><textarea name="summarycomponent" id="summarycomponent" value="" class="titletext long" ></textarea></p>
+        </div>
+    </div>
+    <div class="col">
+		<iframe src="/admin/component/editor" name="editorweb" width="100%" height="500" scrolling="auto" frameborder="0" allowtransparency="true" id="editorweb">
+                <p>No se puede mostrar el editor</p>
+            </iframe>
+	</div>
+		<input type="submit" name="guardar" id="guardar" value="Guardar Componente" class="btngreenlarge" />
+</form>
+{% endblock %}

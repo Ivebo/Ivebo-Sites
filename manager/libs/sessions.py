@@ -25,6 +25,11 @@ from webapp2_extras import sessions
 from webapp2_extras.routes import RedirectRoute
 from webapp2_extras.routes import DomainRoute
 
+from google.appengine.api import images
+
+from manager.model.component import *
+import cloudstorage as gcs
+
 DEBUG = os.environ['SERVER_SOFTWARE'].startswith('Dev')
 if DEBUG:
     debugconfig = True
@@ -37,6 +42,22 @@ confighandler = {
     'secret_key': os.environ['secret_key_sessions'],'cookie_name':os.environ['cookie_name_sessions']
   }
 }
+
+def get_serving_img(gs_key,size,crop=False):
+    try:
+        return images.get_serving_url(gs_key,secure_url=True,size=size,crop=crop)
+    except:
+        return False
+
+def get_component(id):
+    try:
+        filename = '/bucket_google_storage/components/%s.html'%id
+        gcs_file = gcs.open(filename)
+        html_component = gcs_file.read()
+        gcs_file.close()
+        return html_component.decode('utf-8')
+    except:
+        return ''
 
 
 class BaseHandler(webapp2.RequestHandler):
@@ -60,6 +81,8 @@ class BaseHandler(webapp2.RequestHandler):
 
     def renderTemplate(self,template_name,template_vars):
         jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.abspath('.')))
+        jinja_environment.globals.update(get_serving_img=get_serving_img)
+        jinja_environment.globals.update(get_component=get_component)
         template = jinja_environment.get_template(template_name)
         self.response.out.write(template.render(template_vars))
 

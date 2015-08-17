@@ -5,7 +5,6 @@
     margin-right: .6em;
 }
 
-
 @font-face {
   font-family: "sites";
   src:url("fonts/sites.eot");
@@ -64,4 +63,10 @@
 }
 .icon-edit:before {
   content: "c";
+}
+.icon-code:before {
+  content: "b";
+}
+.icon-settings:before {
+  content: "d";
 }

@@ -24,6 +24,15 @@ from google.appengine.api import users
 
 from django.template import defaultfilters
 
+def get_apps():
+  apps = os.environ['apps']
+  apps1 = []
+  if apps:
+     apps = apps.split(',')
+  for a in apps:
+     apps1.append(a.strip())
+  return apps1
+
 
 XSRF_VALIDITY_TIME = 60
 

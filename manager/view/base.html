@@ -11,6 +11,11 @@
         <script type="text/javascript" src="/admin/static/scripts/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
         <script type="text/javascript" src="/admin/static/scripts/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
         <link href="/admin/static/css/icons.css" rel="stylesheet">
+        {% if apps %}
+        {%for a in apps%}
+            <link href="/apps/{{a}}/static/css/style.css" rel="stylesheet">
+        {%endfor%}
+        {%endif%}
         {% block head_extras %}
         {% endblock %}
     </head>

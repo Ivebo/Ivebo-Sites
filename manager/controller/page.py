@@ -50,11 +50,13 @@ class PageAdmin(BaseHandler):
         url_logout = users.create_logout_url("/admin")
         text_exit = {'email':email_admin,'url':url_logout}
         userID = users.get_current_user().user_id()
+        apps = get_apps()
         if action == 'new':
             nav_actual = 'pages'
             template_values = {
                         'exit': text_exit,
-                        'nav_actual': nav_actual
+                        'nav_actual': nav_actual,
+                        'apps':apps
             }
             template_name = '/manager/view/pages_new.html'
             self.renderTemplate(template_name,template_values)
@@ -81,7 +83,8 @@ class PageAdmin(BaseHandler):
                         'view':'home',
                         'catactual':'Inicio',
                         'pages':pages,
-                        'token':token
+                        'token':token,
+                        'apps':apps
                 }
                 template_name = 'manager/view/pages_view.html'
                 self.renderTemplate(template_name,template_values)
@@ -114,7 +117,8 @@ class PageAdmin(BaseHandler):
                         'nav_actual': nav_actual,
                         'view':'category',
                         'catactual':viewcategory.name,
-                        'token':token
+                        'token':token,
+                        'apps':apps
                 }
                 template_name = 'manager/view/pages_view.html'
                 self.renderTemplate(template_name,template_values)
@@ -144,7 +148,8 @@ class PageAdmin(BaseHandler):
                         'nav_actual': nav_actual,
                         'page': page,
                         'key': page_key,
-                        'token':urllib.quote(token)
+                        'token':urllib.quote(token),
+                        'apps':apps
             }
             template_name = 'manager/view/pages_edit.html'
             self.renderTemplate(template_name,template_values)

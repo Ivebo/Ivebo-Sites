@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html> 
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head><meta http-equiv="X-UA-Compatible" content="chrome=1"> 
+<title>Editor</title>
+<link rel="stylesheet" href="/admin/static/scripts/codemirror/codemirror.css">
+<link rel="stylesheet" href="/admin/static/scripts/codemirror/theme/monokai.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script src="/admin/static/scripts/codemirror/codemirror.js"></script>
+<script src="/admin/static/scripts/codemirror/mode/xml/xml.js"></script>
+<script src="/admin/static/scripts/codemirror/mode/javascript/javascript.js"></script>
+<script src="/admin/static/scripts/codemirror/mode/css/css.js"></script>
+<script src="/admin/static/scripts/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<style>
+body,html{
+    margin: 0;
+    height:100%;
+}
+#page{
+    height: 100%;
+}
+.CodeMirror {
+  border: 1px solid #eee;
+  height: 100%;
+}
+</style>
+<script type="text/javascript">
+var editor;
+function getContent(){
+    content = editor.getValue();
+    return content
+}
+function setContent(value){
+    editor.getDoc().setValue(value);
+}
+
+$(document).ready(function(){	
+  editor = CodeMirror.fromTextArea(document.getElementById("contentpage"), {
+                                    lineNumbers: true,
+                                    mode: 'text/html',
+                                    lineWrapping: true,
+                                    theme: 'monokai',
+                                });
+});
+</script>
+<body>
+        <div id="page">
+            <!--<div class="barinsert">
+            <a href="/files/add" title="Insertar Imagen" id="insertimage" class="btngreen" >Archivos</a>
+            </div>-->
+            <textarea name="contentpage" style="width: 100%" id="contentpage">{{html}}</textarea>
+        </div>
+</body>

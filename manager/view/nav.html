@@ -4,5 +4,10 @@
     {% else %}
     <li><a href="/admin/page/new" class="hover icon-page margin-icon">Páginas</a></li>
     {% endif %}
-    {% include "data_site/view/navapps.html" %}
+    {% if nav_actual == 'components' %}
+    <li><a href="/admin/component/new" class="actual icon-code margin-icon">Componentes</a></li>
+    {% else %}
+    <li><a href="/admin/component/new" class="hover icon-code margin-icon">Componentes</a></li>
+    {% endif %}
+    {% include "apps/navapps.html" %}
  </ul>
