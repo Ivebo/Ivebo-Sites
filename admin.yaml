@@ -43,5 +43,6 @@ libraries:
   version: "1.6.1"
 
 includes:
+- apps/controller.yaml
 - manager/controller.yaml
 - data_site/env.yaml
