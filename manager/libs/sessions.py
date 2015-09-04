@@ -51,7 +51,7 @@ def get_serving_img(gs_key,size,crop=False):
 
 def get_component(id):
     try:
-        filename = '/bucket_google_storage/components/%s.html'%id
+        filename = filename = os.environ['bucket']+'/components/%s.html'%id
         gcs_file = gcs.open(filename)
         html_component = gcs_file.read()
         gcs_file.close()

@@ -43,4 +43,4 @@ class RedirectHandler(webapp2.RequestHandler):
 			return
 
 
-app = webapp2.WSGIApplication([('/_ah/start',StartHandler),('/',RedirectHandler),('/.*',RedirectHandler)],debug=debugconfig,config=confighandler)
+app = webapp2.WSGIApplication([('/_ah/start',StartHandler),('/',RedirectHandler),('/.*',RedirectHandler)],debug=debugconfig)
