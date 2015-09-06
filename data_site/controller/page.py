@@ -44,7 +44,7 @@ class PageHandler(BaseHandler):
     def get(self,page):
         page = Page.query(Page.title_short == page).get()
         if page:
-            title_site = os.environ['title_site']=':'+page.title
+            title_site = os.environ['title_site']+':'+page.title
             template_values = {
                 'page':page,
                 'title_site':title_site,
