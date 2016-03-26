@@ -30,11 +30,7 @@ from google.appengine.api import images
 from manager.model.component import *
 import cloudstorage as gcs
 
-DEBUG = os.environ['SERVER_SOFTWARE'].startswith('Dev')
-if DEBUG:
-    debugconfig = True
-else:
-    debugconfig = False
+debugconfig= os.environ['SERVER_SOFTWARE'].startswith('Dev')
 
 
 confighandler = {
