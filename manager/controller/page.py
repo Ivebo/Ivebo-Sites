@@ -420,7 +420,7 @@ class PageAdmin(BaseHandler):
                             page_in_category = PagesinCategory(
                                 page = page_model.key,
                                 category = cat.key,
-                                date_publication = datetime.datetime.utcnow(),
+                                date_publication = page_model.date_publication,
                                 parent = site_key()
                                 )
                             page_in_category.put()
@@ -439,7 +439,7 @@ class PageAdmin(BaseHandler):
                         page_in_category = PagesinCategory(
                             page = page_model.key,
                             category = category_empty.key,
-                            date_publication = datetime.datetime.utcnow(),
+                            date_publication = page_model.date_publication,
                             parent = site_key()
                             )
                         page_in_category.put()
@@ -482,7 +482,7 @@ class PageAdmin(BaseHandler):
                             page_in_category = PagesinCategory(
                                 page = page_model.key,
                                 category = cat.key,
-                                date_publication = datetime.datetime.utcnow(),
+                                date_publication = page_model.date_publication,
                                 parent = site_key()
                                 )
                             page_in_category.put()
@@ -501,7 +501,7 @@ class PageAdmin(BaseHandler):
                         page_in_category = PagesinCategory(
                             page = page_model.key,
                             category = category_empty.key,
-                            date_publication = datetime.datetime.utcnow(),
+                            date_publication = page_model.date_publication,
                             parent = site_key()
                             )
                         page_in_category.put()
